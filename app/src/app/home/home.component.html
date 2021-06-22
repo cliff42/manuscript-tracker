@@ -8,7 +8,11 @@
    </div>
 
    <div class="map">
-     <google-map></google-map>
+     <google-map
+      [zoom]="zoom"
+      [center]="center"
+      [options]="options">
+    </google-map>
    </div>
 </div>
 

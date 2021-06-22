@@ -8,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   zoom = 12;
-  // center: google.maps.LatLngLiteral;
+  // Initialize center to Aachen
+  center: google.maps.LatLngLiteral = {
+    lat: 50.7753,
+    lng: 6.0839,
+  };
   options: google.maps.MapOptions = {
     mapTypeId: 'hybrid',
     zoomControl: false,
@@ -21,12 +25,7 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // navigator.geolocation.getCurrentPosition((position) => {
-    //   this.center = {
-    //     lat: position.coords.latitude,
-    //     lng: position.coords.longitude,
-    //   }
-    // })
+
   }
 
 }
