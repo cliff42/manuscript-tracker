@@ -1,10 +1,12 @@
 <div class="header">
-  <h1>Manuscript Tracker</h1>
+  <h1>Manuscript Stemma Visualizer</h1>
 </div>
 
 <div class="container">
   <div class="navigationPanel">
-    <p>nav panel placeholder</p>
+    <ul *ngFor="let manuscript of manuscripts">
+      <li (click)="onSelect()">{{manuscript.name}}</li>
+    </ul>
    </div>
 
    <div class="map">
