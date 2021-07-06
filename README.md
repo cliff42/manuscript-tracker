@@ -1,2 +1,2 @@
 # manuscript-tracker
-Manuscript Tracker Application
+Manuscript stemma visualizer
