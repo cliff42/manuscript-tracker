@@ -4,9 +4,23 @@
 
 <div class="container">
   <div class="navigationPanel">
-    <ul *ngFor="let manuscript of manuscripts">
+    <!-- <ul *ngFor="let manuscript of manuscripts">
       <li (click)="onSelect()">{{manuscript.name}}</li>
-    </ul>
+    </ul> -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+          mat-row
+          (click)="onSelect(row)"
+          *matRowDef="let row; columns: displayedColumns;"
+      ></tr>
+    </table>
    </div>
 
    <div class="map">

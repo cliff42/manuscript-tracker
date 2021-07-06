@@ -4,9 +4,23 @@
 
 .navigationPanel {
   margin-right:20%;
+  margin-left:5%;
 }
 
-li:hover {
-  color: #357ef2;
+.demo-table {
+  width: 100%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
   cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
 }
