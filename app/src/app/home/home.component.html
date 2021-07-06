@@ -10,7 +10,7 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <th mat-header-cell *matHeaderCellDef>Manuscripts</th>
         <td mat-cell *matCellDef="let element">{{element.name}}</td>
       </ng-container>
 
@@ -28,8 +28,22 @@
       [zoom]="zoom"
       [center]="center"
       [options]="options">
+      <map-marker
+        *ngFor="let marker of markers"
+        [position]="marker.position"
+        [label]="marker.label"
+        [title]="marker.title"
+        [options]="marker.options">
+      </map-marker>
     </google-map>
    </div>
 </div>
 
-
+<div class="support-button">
+  <a href="https://www.buymeacoffee.com/cliff42" target="_blank">
+    <img
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png"
+    alt="Buy Me A Coffee"
+    style="height: 60px !important;width: 217px !important;" >
+  </a>
+</div>

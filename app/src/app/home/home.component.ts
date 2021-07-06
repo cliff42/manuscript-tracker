@@ -30,6 +30,18 @@ export class HomeComponent implements OnInit {
     // maxZoom: 15,
     minZoom: 2,
   };
+  markers: any[] = [
+    {
+      title: 'Test Marker1',
+      position: {
+        lat: 50.7783,
+        lng: 6.0839,
+      },
+      label: 'Test Label',
+      clickable: true,
+      // options: { animation: google.maps.Animation.BOUNCE },
+    }
+  ];
   dataSource: any;
 
   displayedColumns: string[] = ['name'];
