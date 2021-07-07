@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const dbConfig = require('./config/database.config');
 const routes = require('./routes/base.route');
 
+const Manuscript = require('./models/Manuscript');
+
 const app = express();
 
 app.use(cors());
