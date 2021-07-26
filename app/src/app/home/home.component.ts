@@ -5,7 +5,10 @@ export interface Manuscript {
   name: string;
   author: string;
   locations: any;
-  dates: any;
+  earlyDate: any;
+  lateDate: any;
+  sources: any;
+  children: any;
 }
 
 @Component({
@@ -43,6 +46,7 @@ export class HomeComponent implements OnInit {
     }
   ];
   dataSource: any;
+  manuscripts: Manuscript[] = [];
 
   displayedColumns: string[] = ['name'];
 
@@ -50,6 +54,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getManuscripts();
+    // get the manuscript autographs for the table
+    this.getAutographs();
     this.center = {
       lat: 50.7753,
       lng: 6.0839,
@@ -57,25 +63,38 @@ export class HomeComponent implements OnInit {
   }
 
   // on click of element in list -> set center/ markings on map
-  // TODO: get center info from api call to database with name of manuscript selected
   onSelect(manuscript: Manuscript): void {
-    if (manuscript.name === 'Manuscript 1') {
-      this.center = {
-        lat: 49.2827,
-        lng: -123.1207,
-      };
-    } else {
-      this.ngOnInit();
-    }
+    // locations[0] = lat, locations[1] = lng
+    this.center = {
+      lat: manuscript.locations[0],
+      lng: manuscript.locations[1],
+    };
   }
 
   // get list of manuscripts from the backend
   getManuscripts(): void {
-    let res = this.http.get('http://localhost:8000/api/manuscripts');
+    let res = this.http.get<Manuscript[]>('http://localhost:8000/api/manuscripts');
+    res.subscribe((data) => {
+      data.forEach((e: any) => {
+        this.manuscripts.push({
+          name: e.name,
+          author: e.author,
+          locations: e.locations,
+          earlyDate: e.earlyDate,
+          lateDate: e.earlyTime,
+          sources: e.sources,
+          children: e.children,
+        })
+      });
+    });
+  }
+
+  // get list of autographs to display in the table from the backend
+  getAutographs(): void {
+    let res = this.http.get('http://localhost:8000/api/autographs');
     res.subscribe((data) => {
       // TODO: maybe need to use 'renderRows()' method on table to update with manuscripts after get is called
       this.dataSource = data;
     });
   }
-
 }
