@@ -1,14 +1,14 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface Manuscript {
   name: string;
   author: string;
-  locations: any;
+  locations: any[];
   earlyDate: any;
   lateDate: any;
-  sources: any;
-  children: any;
+  sources: any[];
+  children: any[];
 }
 
 @Component({
@@ -33,20 +33,9 @@ export class HomeComponent implements OnInit {
     // maxZoom: 15,
     minZoom: 2,
   };
-  markers: any[] = [
-    {
-      title: 'Test Marker1',
-      position: {
-        lat: 50.7783,
-        lng: 6.0839,
-      },
-      label: 'Test Label',
-      clickable: true,
-      // options: { animation: google.maps.Animation.BOUNCE },
-    }
-  ];
+  markers: any[] = [];
   dataSource: any;
-  manuscripts: Manuscript[] = [];
+  manuscripts: any = {};
 
   displayedColumns: string[] = ['name'];
 
@@ -69,6 +58,7 @@ export class HomeComponent implements OnInit {
       lat: manuscript.locations[0],
       lng: manuscript.locations[1],
     };
+    this.placeMarkers(manuscript);
   }
 
   // get list of manuscripts from the backend
@@ -76,7 +66,7 @@ export class HomeComponent implements OnInit {
     let res = this.http.get<Manuscript[]>('http://localhost:8000/api/manuscripts');
     res.subscribe((data) => {
       data.forEach((e: any) => {
-        this.manuscripts.push({
+        let manuscript: Manuscript = {
           name: e.name,
           author: e.author,
           locations: e.locations,
@@ -84,8 +74,19 @@ export class HomeComponent implements OnInit {
           lateDate: e.earlyTime,
           sources: e.sources,
           children: e.children,
-        })
+        };
+        this.manuscripts[e.name] = manuscript;
       });
+
+      // // populate children with objects instead of ids from database
+      // for (let manuscript in this.manuscripts) {
+      //   for (let i = 0; i < this.manuscripts[manuscript].children.length; i++) {
+      //     if (this.manuscripts[this.manuscripts[manuscript].children[i]] != null) {
+      //       this.manuscripts[manuscript].children[i] =
+      //       this.manuscripts[this.manuscripts[manuscript].children[i]];
+      //     }
+      //   }
+      // }
     });
   }
 
@@ -96,5 +97,61 @@ export class HomeComponent implements OnInit {
       // TODO: maybe need to use 'renderRows()' method on table to update with manuscripts after get is called
       this.dataSource = data;
     });
+  }
+
+  // places markers on the map with the location of the autograph and its children
+  placeMarkers(manuscript: Manuscript): void {
+    // add marker for autograph
+    this.markers.push({
+      title: manuscript.name,
+      position: {
+        lat: manuscript.locations[0],
+        lng: manuscript.locations[1],
+      },
+      label: {text: manuscript.name, color: "white"},
+      clickable: true,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 14,
+        fillColor: "red",
+        fillOpacity: 1,
+        strokeWeight: 0.4
+    },
+      // options: { animation: google.maps.Animation.BOUNCE },
+    })
+
+    // recursivly place markers for each child
+    for (let child of manuscript.children) {
+      this.placeMarkersForChild(child);
+    }
+  }
+
+  // place marker for child manuscript
+  placeMarkersForChild(child: string) {
+    // add markers for children
+    if (this.manuscripts[child] != null) {
+      this.markers.push({
+        title: this.manuscripts[child].name,
+        position: {
+          lat: this.manuscripts[child].locations[0],
+          lng: this.manuscripts[child].locations[1],
+        },
+        label: {text: this.manuscripts[child].name, color: "white"},
+        clickable: true,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10,
+          fillColor: "blue",
+          fillOpacity: 1,
+          strokeWeight: 0.4
+      },
+        // options: { animation: google.maps.Animation.BOUNCE },
+      })
+
+      // if the child has children, place the nodes for those
+      for (let manuscript of this.manuscripts[child].children) {
+        this.placeMarkersForChild(manuscript);
+      }
+    }
   }
 }
