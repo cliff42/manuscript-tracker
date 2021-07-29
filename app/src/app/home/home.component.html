@@ -35,9 +35,13 @@
         [title]="marker.title"
         [options]="marker.options"
         [icon]="marker.icon"
-        (mapClick)="onNodeSelect(marker)"
-      >
+        (mapClick)="onNodeSelect(marker)">
       </map-marker>
+      <map-polyline
+        *ngFor="let polyline of polylines"
+        [path]="polyline.path"
+        [options]="polyline.options">
+      </map-polyline>
     </google-map>
    </div>
 

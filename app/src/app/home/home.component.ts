@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
     minZoom: 2,
   };
   markers: any[] = [];
+  polylines: any[] = [];
   dataSource: any;
   manuscripts: any = {};
   manuscript_info: string = "";
@@ -61,6 +62,7 @@ export class HomeComponent implements OnInit {
       lng: manuscript.locations[1],
     };
     this.placeMarkers(manuscript);
+    this.placePolylines(manuscript);
     this.populateInfo(manuscript);
   }
 
@@ -125,6 +127,7 @@ export class HomeComponent implements OnInit {
       label: {text: manuscript.name, color: "white"},
       clickable: true,
       icon: {
+        // TODO: change path to BACKWARDS_CLOSED_ARRORW with scale 8
         path: google.maps.SymbolPath.CIRCLE,
         scale: 14,
         fillColor: "red",
@@ -160,7 +163,7 @@ export class HomeComponent implements OnInit {
           strokeWeight: 0.4
         },
         // options: { animation: google.maps.Animation.BOUNCE },
-      })
+      });
 
       // if the child has children, place the nodes for those
       for (let manuscript of this.manuscripts[child].children) {
@@ -173,5 +176,33 @@ export class HomeComponent implements OnInit {
   // populate the info div with the info for the manuscript
   populateInfo(manuscript: Manuscript): void {
     this.manuscript_info = manuscript.info;
+  }
+
+  // place polylines between each parent-child relation
+  placePolylines(parent: Manuscript): void {
+    // clear polylines
+    this.polylines = [];
+    for (let child of parent.children) {
+      if (this.manuscripts[child] != null) {
+        this.placePolylinesHelper(parent, this.manuscripts[child]);
+      }
+    }
+  }
+
+  placePolylinesHelper(parent: Manuscript, child: Manuscript) {
+    this.polylines.push({
+      path: [
+        {lat: parent.locations[0], lng: parent.locations[1]},
+        {lat: child.locations[0], lng: child.locations[1]},
+      ],
+      options: {
+        strokeColor: "white",
+      }
+    });
+    for (let manuscript of child.children) {
+      if (this.manuscripts[manuscript] != null) {
+        this.placePolylinesHelper(child, this.manuscripts[manuscript]);
+      }
+    }
   }
 }
