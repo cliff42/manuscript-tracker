@@ -150,6 +150,7 @@ export class HomeComponent implements OnInit {
 
       // if the child has children, place the nodes for those
       for (let manuscript of this.manuscripts[child].children) {
+        // TODO: add different colours for each generation of children (just add/ subtract to/from hex value?)
         this.placeMarkersForChild(manuscript);
       }
     }

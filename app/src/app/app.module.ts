@@ -8,11 +8,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MapComponent } from './map/map.component';
+import { AboutComponent } from './about/about.component';
+import { StemmaComponent } from './stemma/stemma.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    MapComponent,
+    AboutComponent,
+    StemmaComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +29,8 @@ import { MatTableModule } from '@angular/material/table';
     GoogleMapsModule,
     BrowserAnimationsModule,
     MatTableModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
