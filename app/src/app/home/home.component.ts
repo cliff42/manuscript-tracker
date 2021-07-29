@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 export interface Manuscript {
   name: string;
   author: string;
+  info: string;
   locations: any[];
   earlyDate: any;
   lateDate: any;
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
   markers: any[] = [];
   dataSource: any;
   manuscripts: any = {};
+  manuscript_info: string = "";
 
   displayedColumns: string[] = ['name'];
 
@@ -52,13 +54,22 @@ export class HomeComponent implements OnInit {
   }
 
   // on click of element in list -> set center/ markings on map
-  onSelect(manuscript: Manuscript): void {
+  onTableSelect(manuscript: Manuscript): void {
     // locations[0] = lat, locations[1] = lng
     this.center = {
       lat: manuscript.locations[0],
       lng: manuscript.locations[1],
     };
     this.placeMarkers(manuscript);
+    this.populateInfo(manuscript);
+  }
+
+  // on click of a node on the map
+  onNodeSelect(marker: any): void {
+    if (this.manuscripts[marker.title] != null) {
+      let manuscript = this.manuscripts[marker.title];
+      this.populateInfo(manuscript);
+    }
   }
 
   // get list of manuscripts from the backend
@@ -69,6 +80,7 @@ export class HomeComponent implements OnInit {
         let manuscript: Manuscript = {
           name: e.name,
           author: e.author,
+          info: e.info,
           locations: e.locations,
           earlyDate: e.earlyDate,
           lateDate: e.earlyTime,
@@ -101,6 +113,8 @@ export class HomeComponent implements OnInit {
 
   // places markers on the map with the location of the autograph and its children
   placeMarkers(manuscript: Manuscript): void {
+    // clear map's current markers
+    this.markers = [];
     // add marker for autograph
     this.markers.push({
       title: manuscript.name,
@@ -144,7 +158,7 @@ export class HomeComponent implements OnInit {
           fillColor: "blue",
           fillOpacity: 1,
           strokeWeight: 0.4
-      },
+        },
         // options: { animation: google.maps.Animation.BOUNCE },
       })
 
@@ -154,5 +168,10 @@ export class HomeComponent implements OnInit {
         this.placeMarkersForChild(manuscript);
       }
     }
+  }
+
+  // populate the info div with the info for the manuscript
+  populateInfo(manuscript: Manuscript): void {
+    this.manuscript_info = manuscript.info;
   }
 }

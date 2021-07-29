@@ -17,7 +17,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
           mat-row
-          (click)="onSelect(row)"
+          (click)="onTableSelect(row)"
           *matRowDef="let row; columns: displayedColumns;"
       ></tr>
     </table>
@@ -34,12 +34,14 @@
         [label]="marker.label"
         [title]="marker.title"
         [options]="marker.options"
-        [icon]="marker.icon">
+        [icon]="marker.icon"
+        (mapClick)="onNodeSelect(marker)"
+      >
       </map-marker>
     </google-map>
    </div>
 
-   <div class="grid-item">Manuscript Info</div>
+   <div class="grid-item">{{ manuscript_info }}</div>
 
    <div class="grid-item">Manuscript Stemma</div>
 </div>
