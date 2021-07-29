@@ -3,7 +3,7 @@
 </div>
 
 <div class="container">
-  <div class="navigationPanel">
+  <div class="grid-item">
     <!-- <ul *ngFor="let manuscript of manuscripts">
       <li (click)="onSelect()">{{manuscript.name}}</li>
     </ul> -->
@@ -23,7 +23,7 @@
     </table>
    </div>
 
-   <div class="map">
+   <div class="grid-item">
      <google-map
       [zoom]="zoom"
       [center]="center"
@@ -38,4 +38,8 @@
       </map-marker>
     </google-map>
    </div>
+
+   <div class="grid-item">Manuscript Info</div>
+
+   <div class="grid-item">Manuscript Stemma</div>
 </div>
