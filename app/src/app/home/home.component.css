@@ -37,3 +37,7 @@
 .demo-row-is-clicked {
   font-weight: bold;
 }
+
+.info {
+  display: block;
+}

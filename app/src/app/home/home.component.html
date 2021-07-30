@@ -45,7 +45,20 @@
     </google-map>
    </div>
 
-   <div class="grid-item">{{ manuscript_info }}</div>
+   <div class="grid-item">
+     <div class="info">
+      <div>{{ manuscript_name }}</div>
+      <div>{{ manuscript_info }}</div>
+     </div>
+    </div>
 
-   <div class="grid-item">Manuscript Stemma</div>
+   <div class="grid-item">
+    <ngx-graph
+    class="chart-container"
+    [view]="[300, 300]"
+    [showMiniMap]="false"
+    [links]="graphLinks"
+    [nodes]="graphNodes">
+  </ngx-graph>
+   </div>
 </div>

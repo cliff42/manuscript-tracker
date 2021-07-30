@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MapComponent } from './map/map.component';
 import { AboutComponent } from './about/about.component';
 import { StemmaComponent } from './stemma/stemma.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { StemmaComponent } from './stemma/stemma.component';
     MatTableModule,
     MatToolbarModule,
     MatButtonModule,
+    NgxGraphModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

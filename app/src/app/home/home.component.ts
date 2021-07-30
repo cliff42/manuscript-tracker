@@ -5,6 +5,7 @@ export interface Manuscript {
   name: string;
   author: string;
   info: string;
+  _id: any;
   locations: any[];
   earlyDate: any;
   lateDate: any;
@@ -39,6 +40,10 @@ export class HomeComponent implements OnInit {
   dataSource: any;
   manuscripts: any = {};
   manuscript_info: string = "";
+  manuscript_name: string = "";
+  curr_id: number = 0;
+  graphNodes: any[] = [];
+  graphLinks: any[] = [];
 
   displayedColumns: string[] = ['name'];
 
@@ -64,6 +69,7 @@ export class HomeComponent implements OnInit {
     this.placeMarkers(manuscript);
     this.placePolylines(manuscript);
     this.populateInfo(manuscript);
+    this.populateGraph(manuscript);
   }
 
   // on click of a node on the map
@@ -83,6 +89,7 @@ export class HomeComponent implements OnInit {
           name: e.name,
           author: e.author,
           info: e.info,
+          _id: e._id,
           locations: e.locations,
           earlyDate: e.earlyDate,
           lateDate: e.earlyTime,
@@ -175,11 +182,13 @@ export class HomeComponent implements OnInit {
 
   // populate the info div with the info for the manuscript
   populateInfo(manuscript: Manuscript): void {
+    this.manuscript_name = manuscript.name;
     this.manuscript_info = manuscript.info;
   }
 
   // place polylines between each parent-child relation
   placePolylines(parent: Manuscript): void {
+    console.log(this.manuscripts);
     // clear polylines
     this.polylines = [];
     for (let child of parent.children) {
@@ -202,6 +211,59 @@ export class HomeComponent implements OnInit {
     for (let manuscript of child.children) {
       if (this.manuscripts[manuscript] != null) {
         this.placePolylinesHelper(child, this.manuscripts[manuscript]);
+      }
+    }
+  }
+
+  populateGraph(parent: Manuscript): void {
+    // clear current graph
+    this.graphNodes = [];
+    this.graphLinks = [];
+
+    if (parent.children.length > 0) {
+      for (let child of parent.children) {
+        if (this.manuscripts[child] != null) {
+          this.populateGraphHelper(parent, this.manuscripts[child]);
+        }
+      }
+    } else {
+      // populate single node
+      this.graphNodes.push({
+        id: parent._id,
+        label: parent.name,
+      });
+    }
+
+  }
+
+  populateGraphHelper(parent: Manuscript, child: Manuscript): void {
+    // add parent and child nodes to graphNodes
+    // only add nodes if they don't already exist in the graph
+    const check = this.graphNodes.find(n => n.id == parent._id);
+    if (check == undefined) {
+      this.graphNodes.push({
+        id: parent._id,
+        label: parent.name,
+      });
+    }
+    // add child node
+    this.graphNodes.push(
+    {
+      id: child._id,
+      label: child.name,
+    });
+
+    // add link between parent and child nodes
+    this.graphLinks.push({
+      id: 'l' + parent._id + '_' + child._id,
+      source: parent._id,
+      target: child._id,
+    });
+
+    // populate each child nodes children
+    for (let manuscript of child.children) {
+      if (this.manuscripts[manuscript] != null) {
+        this.populateGraphHelper(child, this.manuscripts[manuscript]);
       }
     }
   }
