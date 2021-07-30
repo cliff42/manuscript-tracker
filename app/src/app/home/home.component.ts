@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     zoomControl: true,
     scrollwheel: true,
     disableDoubleClickZoom: true,
+    streetViewControl: false,
     // maxZoom: 15,
     minZoom: 2,
   };
