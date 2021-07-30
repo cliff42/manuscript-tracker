@@ -25,6 +25,8 @@
 
    <div class="grid-item">
      <google-map
+      height="400px"
+      width="600px"
       [zoom]="zoom"
       [center]="center"
       [options]="options">
@@ -53,12 +55,13 @@
     </div>
 
    <div class="grid-item">
+     <div>Semma</div>
     <ngx-graph
-    class="chart-container"
-    [view]="[300, 300]"
-    [showMiniMap]="false"
-    [links]="graphLinks"
-    [nodes]="graphNodes">
-  </ngx-graph>
+      class="chart-container"
+      [view]="[600, 400]"
+      [showMiniMap]="false"
+      [links]="graphLinks"
+      [nodes]="graphNodes">
+    </ngx-graph>
    </div>
 </div>
