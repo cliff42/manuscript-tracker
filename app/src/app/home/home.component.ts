@@ -1,5 +1,7 @@
 import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
+import { Layout, Edge, Node } from '@swimlane/ngx-graph';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 export interface Manuscript {
   name: string;
@@ -45,6 +47,12 @@ export class HomeComponent implements OnInit {
   curr_id: number = 0;
   graphNodes: any[] = [];
   graphLinks: any[] = [];
+  graphPanning: boolean = false;
+  graphDragging: boolean = false;
+  graphZoom: boolean = false;
+  center$: Subject<boolean> = new Subject();
+  zoomToFit$: Subject<boolean> = new Subject();
+  update$: Subject<boolean> = new Subject();
 
   displayedColumns: string[] = ['name'];
 
@@ -221,6 +229,8 @@ export class HomeComponent implements OnInit {
     this.graphNodes = [];
     this.graphLinks = [];
 
+    this.updateGraph();
+
     if (parent.children.length > 0) {
       for (let child of parent.children) {
         if (this.manuscripts[child] != null) {
@@ -235,6 +245,7 @@ export class HomeComponent implements OnInit {
       });
     }
 
+    this.updateGraph();
   }
 
   populateGraphHelper(parent: Manuscript, child: Manuscript): void {
@@ -267,5 +278,19 @@ export class HomeComponent implements OnInit {
         this.populateGraphHelper(child, this.manuscripts[manuscript]);
       }
     }
+  }
+
+  highlightSelectedNode(): void {
+    /* TODO: if can't click on individual ngx nodes, just use _id of selected node
+    on map and then search trough list of nodes and change that one's colour - also
+    will need to remove highlight on previously selected node - and will need to highlight
+    autograph when it is first selected
+    */
+  }
+
+  updateGraph(): void {
+    this.update$.next(true)
+    this.center$.next(true)
+    this.zoomToFit$.next(true)
   }
 }

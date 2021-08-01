@@ -58,10 +58,17 @@
      <div>Semma</div>
     <ngx-graph
       class="chart-container"
+      layout="dagre"
+      [draggingEnabled]="graphDragging"
+      [panningEnabled]="graphPanning"
+      [enableZoom]="graphZoom"
       [view]="[600, 400]"
       [showMiniMap]="false"
       [links]="graphLinks"
-      [nodes]="graphNodes">
+      [nodes]="graphNodes"
+      [center$]="center$"
+      [zoomToFit$]="zoomToFit$"
+      [update$]="update$">
     </ngx-graph>
    </div>
 </div>
