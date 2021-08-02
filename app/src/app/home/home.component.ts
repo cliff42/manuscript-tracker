@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { Layout, Edge, Node } from '@swimlane/ngx-graph';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import * as shape from 'd3-shape';
 
 export interface Manuscript {
   name: string;
@@ -50,9 +51,11 @@ export class HomeComponent implements OnInit {
   graphPanning: boolean = false;
   graphDragging: boolean = false;
   graphZoom: boolean = false;
+  curve = shape.curveBundle.beta(1);
   center$: Subject<boolean> = new Subject();
   zoomToFit$: Subject<boolean> = new Subject();
   update$: Subject<boolean> = new Subject();
+  graphRectColour: string = '#42f5c8';
 
   displayedColumns: string[] = ['name'];
 
@@ -197,7 +200,6 @@ export class HomeComponent implements OnInit {
 
   // place polylines between each parent-child relation
   placePolylines(parent: Manuscript): void {
-    console.log(this.manuscripts);
     // clear polylines
     this.polylines = [];
     for (let child of parent.children) {
