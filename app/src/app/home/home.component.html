@@ -76,8 +76,8 @@
       </ng-template>
 
       <ng-template #nodeTemplate let-node>
-        <svg:g class="node">
-          <svg:rect [attr.width]="150" [attr.height]="50" [attr.fill]="graphRectColour" />
+        <svg:g class="node" (click)="onStemmaNodeClick(node)">
+          <svg:rect [attr.width]="150" [attr.height]="50" [attr.fill]="node.color" />
           <svg:text alignment-baseline="central" [attr.x]="15" [attr.y]="25">{{node.label}}</svg:text>
         </svg:g>
       </ng-template>

@@ -55,7 +55,6 @@ export class HomeComponent implements OnInit {
   center$: Subject<boolean> = new Subject();
   zoomToFit$: Subject<boolean> = new Subject();
   update$: Subject<boolean> = new Subject();
-  graphRectColour: string = '#42f5c8';
 
   displayedColumns: string[] = ['name'];
 
@@ -244,6 +243,7 @@ export class HomeComponent implements OnInit {
       this.graphNodes.push({
         id: parent._id,
         label: parent.name,
+        color: '#daf542',
       });
     }
 
@@ -258,6 +258,7 @@ export class HomeComponent implements OnInit {
       this.graphNodes.push({
         id: parent._id,
         label: parent.name,
+        color: '#daf542',
       });
     }
     // add child node
@@ -265,6 +266,7 @@ export class HomeComponent implements OnInit {
     {
       id: child._id,
       label: child.name,
+      color: '#daf542',
     });
 
     // add link between parent and child nodes
@@ -282,12 +284,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  highlightSelectedNode(): void {
+  onStemmaNodeClick(node: any): void {
     /* TODO: if can't click on individual ngx nodes, just use _id of selected node
     on map and then search trough list of nodes and change that one's colour - also
     will need to remove highlight on previously selected node - and will need to highlight
     autograph when it is first selected
     */
+    node.color = '#42f5c8'
   }
 
   updateGraph(): void {
