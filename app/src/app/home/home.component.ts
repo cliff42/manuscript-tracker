@@ -95,6 +95,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (this.manuscripts[marker.title] != null) {
       this.populateInfo(this.manuscripts[marker.title]);
       this.centerMapOnNode(this.manuscripts[marker.title].locations);
+      this.highlightStemmaNode(this.manuscripts[marker.title]._id);
     }
   }
 
@@ -292,22 +293,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   // when a node is clicked on the stemma graph
-  onStemmaNodeClick(node: any): void {
+  onSelectStemmaNode(node: any): void {
     /* TODO: if can't click on individual ngx nodes, just use _id of selected node
     on map and then search trough list of nodes and change that one's colour - also
     will need to remove highlight on previously selected node - and will need to highlight
     autograph when it is first selected
     */
-   // highlight selected nodes
-    node.color = '#42f5c8'
-    for (let n of this.graphNodes) {
-      if (n.label != node.label) {
-        n.color = '#daf542';
-      }
-    }
+    // highlight selected nodes
+    this.highlightStemmaNode(node.id);
+
     if (this.manuscripts[node.label] != null) {
       this.populateInfo(this.manuscripts[node.label]);
       this.centerMapOnNode(this.manuscripts[node.label].locations);
+    }
+  }
+
+  highlightStemmaNode(id: any): void {
+    for (let node of this.graphNodes) {
+      if (node.id === id) {
+        node.color = '#42f5c8';
+      } else {
+        node.color = '#daf542';
+      }
     }
   }
 
