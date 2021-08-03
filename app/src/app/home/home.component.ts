@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Layout, Edge, Node } from '@swimlane/ngx-graph';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -22,8 +22,8 @@ export interface Manuscript {
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
-
+export class HomeComponent implements OnInit, AfterViewInit {
+  map: any;
   zoom = 12;
   // Initialize center to Aachen
   center: google.maps.LatLngLiteral = {
@@ -56,6 +56,8 @@ export class HomeComponent implements OnInit {
   zoomToFit$: Subject<boolean> = new Subject();
   update$: Subject<boolean> = new Subject();
 
+  @ViewChild('gmapElement', { static: false }) gmap!: ElementRef;
+
   displayedColumns: string[] = ['name'];
 
   constructor(private http:HttpClient) { }
@@ -68,6 +70,11 @@ export class HomeComponent implements OnInit {
       lat: 50.7753,
       lng: 6.0839,
     }
+  }
+
+  ngAfterViewInit() {
+    // this.map = new google.maps.Map(this.gmap.nativeElement, { center: this.center, zoom: this.zoom });
+    this.map = this.gmap;
   }
 
   // on click of element in list -> set center/ markings on map
@@ -311,10 +318,14 @@ export class HomeComponent implements OnInit {
   }
 
   centerMapOnNode(locations: any): void {
-    this.center = {
+    this.map.panTo({
       lat: locations[0],
       lng: locations[1],
-    };
+    });
+    // this.center = {
+    //   lat: locations[0],
+    //   lng: locations[1],
+    // };
     this.zoom = 12;
   }
 }
