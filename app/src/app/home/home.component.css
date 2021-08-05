@@ -42,7 +42,6 @@
   display: block;
 }
 
-/* #map {
-  height: 550px;
-  width: 100%;
-} */
+#map {
+  border-radius: 25px;
+}

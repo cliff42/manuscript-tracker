@@ -19,7 +19,7 @@
     </table>
    </div>
 
-   <div class="grid-item" id=”map”>
+   <div class="grid-item" id="map">
      <google-map
       #gmapElement
       height="400px"
@@ -54,6 +54,7 @@
    <div class="grid-item">
      <div>Semma</div>
     <ngx-graph
+      *ngIf="showGraph"
       class="chart-container"
       [draggingEnabled]="graphDragging"
       [panningEnabled]="graphPanning"
