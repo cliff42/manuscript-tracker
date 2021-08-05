@@ -5,3 +5,7 @@
 .coffee:hover {
   opacity: 0.5;
 }
+
+.navbar {
+  padding: 0;
+}

@@ -511,7 +511,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     let that = this;
     setTimeout(function () {
       that.updateGraph();
-    }, 40);
+    }, 100);
 
     if (parent.children.length > 0) {
       for (let child of parent.children) {
@@ -530,9 +530,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     setTimeout(function () {
       that.updateGraph();
-    }, 80);
+    }, 100);
 
-    that.showGraph = true;
+    this.showGraph = true;
   }
 
   populateGraphHelper(parent: Manuscript, child: Manuscript): void {
