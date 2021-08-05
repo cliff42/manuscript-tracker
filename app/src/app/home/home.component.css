@@ -3,7 +3,7 @@
   background-color:#fff;
   display:grid;
   grid-template-columns:
-  35% 50%;
+  35% 60%;
   grid-row: auto auto;
   column-gap: 100px;
   row-gap: 20px;
@@ -11,12 +11,12 @@
 
 .grid-item {
   padding:20px;
-  border-radius:10px;
   display:flex;
   align-items:top;
   justify-content:center;
   font-size: 16px;
   font-family:sans-serif;
+  border: 3px solid black;
 }
 
 .demo-table {
@@ -40,8 +40,4 @@
 
 .info {
   display: block;
-}
-
-#map {
-  border-radius: 25px;
 }
