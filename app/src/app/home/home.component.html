@@ -6,7 +6,7 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" multiTemplateDataRows>
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Manuscripts</th>
+        <th mat-header-cell *matHeaderCellDef>Manuscript Autographs</th>
         <td mat-cell *matCellDef="let manuscript">{{manuscript.name}}</td>
       </ng-container>
 
@@ -18,10 +18,12 @@
               <div class="example-manuscript-name"> {{manuscript.name}} </div>
             </div> -->
             <div class="manuscript-description">
-              Description:
-              {{manuscript.info}}
+              Author:
+              {{manuscript.author}}
+              <br>
+              {{manuscript.earlyDate}} - {{manuscript.lateDate}}
+              <div class="manuscript-sources">Sources: {{manuscript.sources}}</div>
             </div>
-            <div class="manuscript-sources">Sources: {{manuscript.sources}}</div>
           </div>
         </td>
       </ng-container>
