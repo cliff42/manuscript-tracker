@@ -66,3 +66,15 @@ body {
   margin-top: 15%;
   margin-left: 10%;
 }
+
+.email {
+  margin-top: 10%;
+  margin-left: 0%;
+  display: flex;
+}
+
+.contact-info {
+  margin-top: 15%;
+  margin-left: 4%;
+  height: 30%;
+}
