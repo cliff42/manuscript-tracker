@@ -12,15 +12,16 @@
 
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let manuscript" [attr.colspan]="1">
-          <div class="example-manuscript-detail"
+          <div class="manuscript-detail"
                [@detailExpand]="manuscript == expandedManuscript ? 'expanded' : 'collapsed'">
-            <div class="example-manuscript-diagram">
+            <!-- <div class="example-manuscript-diagram">
               <div class="example-manuscript-name"> {{manuscript.name}} </div>
-            </div>
-            <div class="example-manuscript-description">
+            </div> -->
+            <div class="manuscript-description">
+              Description:
               {{manuscript.info}}
-              <span class="example-manuscript-description-attribution"> -- Wikipedia </span>
             </div>
+            <div class="manuscript-sources">Sources: {{manuscript.sources}}</div>
           </div>
         </td>
       </ng-container>
@@ -29,8 +30,8 @@
       <tr
           mat-row
           *matRowDef="let manuscript; columns: displayedColumns;"
-          class="example-manuscript-row"
-          [class.example-expanded-row]="expandedManuscript === manuscript"
+          class="manuscript-row"
+          [class.expanded-row]="expandedManuscript === manuscript"
           (click)="onTableSelect(manuscript); expandedManuscript = expandedManuscript === manuscript ? null : manuscript">
       ></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
