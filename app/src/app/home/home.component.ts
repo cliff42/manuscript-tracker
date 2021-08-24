@@ -3,6 +3,7 @@ import { Layout, Edge, Node } from '@swimlane/ngx-graph';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import * as shape from 'd3-shape';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 export interface Manuscript {
   name: string;
@@ -19,7 +20,14 @@ export interface Manuscript {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
 export class HomeComponent implements OnInit, AfterViewInit {
@@ -313,6 +321,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   manuscript_info: string = "";
   manuscript_name: string = "";
   curr_id: number = 0;
+  expandedManuscript: Manuscript | null = null;
   graphNodes: any[] = [];
   graphLinks: any[] = [];
   graphPanning: boolean = false;
