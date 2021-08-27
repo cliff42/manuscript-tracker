@@ -10,18 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MapComponent } from './map/map.component';
 import { AboutComponent } from './about/about.component';
-import { StemmaComponent } from './stemma/stemma.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MapComponent,
     AboutComponent,
-    StemmaComponent,
   ],
   imports: [
     BrowserModule,

@@ -318,15 +318,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
   polylines: any[] = [];
   dataSource: any;
   manuscripts: any = {};
+  showInformation: boolean = false;
   manuscript_info: string = "";
+  manuscript_author: string = "";
+  manuscript_date: string = "";
   manuscript_name: string = "";
   curr_id: number = 0;
   expandedManuscript: Manuscript | null = null;
   graphNodes: any[] = [];
   graphLinks: any[] = [];
-  graphPanning: boolean = false;
+  graphPanning: boolean = true;
   graphDragging: boolean = false;
-  graphZoom: boolean = false;
+  graphZoom: boolean = true;
+  graphColour: string = '#e9bc62';
+  graphSelectedColour: string = '#42f5c8';
   curve = shape.curveBundle.beta(1);
   center$: Subject<boolean> = new Subject();
   zoomToFit$: Subject<boolean> = new Subject();
@@ -388,7 +393,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           _id: e._id,
           locations: e.locations,
           earlyDate: e.earlyDate,
-          lateDate: e.earlyTime,
+          lateDate: e.earlyDate,
           sources: e.sources,
           children: e.children,
         };
@@ -479,6 +484,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   // populate the info div with the info for the manuscript
   populateInfo(manuscript: Manuscript): void {
     this.manuscript_name = manuscript.name;
+    this.manuscript_author = manuscript.author;
+    this.manuscript_date = manuscript.earlyDate + " - " + manuscript.lateDate;
     this.manuscript_info = manuscript.info;
   }
 
@@ -533,7 +540,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.graphNodes.push({
         id: parent._id,
         label: parent.name,
-        color: '#daf542',
+        color: this.graphColour,
       });
     }
 
@@ -552,7 +559,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.graphNodes.push({
         id: parent._id,
         label: parent.name,
-        color: '#daf542',
+        color: this.graphColour,
       });
     }
     // add child node
@@ -560,7 +567,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       id: child._id,
       label: child.name,
-      color: '#daf542',
+      color: this.graphColour,
     });
 
     // add link between parent and child nodes
@@ -597,17 +604,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   highlightStemmaNode(id: any): void {
     for (let node of this.graphNodes) {
       if (node.id === id) {
-        node.color = '#42f5c8';
+        node.color = this.graphSelectedColour;
       } else {
-        node.color = '#daf542';
+        node.color = this.graphColour;
       }
     }
   }
 
   updateGraph(): void {
     this.update$.next(true)
-    this.center$.next(true)
     this.zoomToFit$.next(true)
+    this.center$.next(true)
   }
 
   centerMapOnNode(locations: any): void {

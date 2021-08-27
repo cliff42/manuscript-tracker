@@ -65,61 +65,66 @@
     </google-map>
    </div>
 
-   <div class="grid-item">
-     <div class="info">
-      <div>{{ manuscript_name }}</div>
-      <div>{{ manuscript_info }}</div>
+   <div>
+     <h3>Information:</h3>
+     <div class="info grid-item">
+      <p><b>Title:</b> {{ manuscript_name }}</p>
+      <p><b>Author:</b> {{ manuscript_author }}</p>
+      <p><b>Date:</b> {{ manuscript_date }}</p>
+      <p><b>Info:</b><br>{{ manuscript_info }}</p>
      </div>
-    </div>
+   </div>
 
-   <div class="grid-item">
-     <div>Semma</div>
-    <ngx-graph
-      *ngIf="showGraph"
-      class="chart-container"
-      [draggingEnabled]="graphDragging"
-      [panningEnabled]="graphPanning"
-      [enableZoom]="graphZoom"
-      [view]="[600, 400]"
-      [showMiniMap]="false"
-      [links]="graphLinks"
-      [nodes]="graphNodes"
-      [curve]="curve"
-      [center$]="center$"
-      [zoomToFit$]="zoomToFit$"
-      [update$]="update$">
-      <ng-template #defsTemplate>
-        <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
-          <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
-        </svg:marker>
-      </ng-template>
+   <div>
+     <h3>Stemma Diagram:</h3>
+     <div class="grid-item">
+      <ngx-graph
+        *ngIf="showGraph"
+        class="chart-container"
+        [draggingEnabled]="graphDragging"
+        [panningEnabled]="graphPanning"
+        [enableZoom]="graphZoom"
+        [view]="[700, 400]"
+        [showMiniMap]="false"
+        [links]="graphLinks"
+        [nodes]="graphNodes"
+        [curve]="curve"
+        [center$]="center$"
+        [zoomToFit$]="zoomToFit$"
+        [update$]="update$">
+        <ng-template #defsTemplate>
+          <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+            <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+          </svg:marker>
+        </ng-template>
 
-      <ng-template #nodeTemplate let-node>
-        <svg:g class="node" (click)="onSelectStemmaNode(node)">
-          <svg:rect [attr.width]="150" [attr.height]="50" [attr.fill]="node.color" />
-          <svg:text alignment-baseline="central" [attr.x]="15" [attr.y]="25">{{node.label}}</svg:text>
-        </svg:g>
-      </ng-template>
+        <ng-template #nodeTemplate let-node>
+          <svg:g class="node" (click)="onSelectStemmaNode(node)">
+            <svg:rect [attr.width]="150" [attr.height]="50" [attr.fill]="node.color" />
+            <svg:text alignment-baseline="central" [attr.x]="15" [attr.y]="25">{{node.label}}</svg:text>
+          </svg:g>
+        </ng-template>
 
-      <ng-template #linkTemplate let-link>
-        <svg:g class="edge">
-          <svg:path
-            class="line"
-            stroke-width="2"
-            marker-end="url(#arrow)" >
-          </svg:path>
-          <svg:text
-            class="edge-label"
-            text-anchor="middle">
-          <textPath
-                    style="fill: #666;"
-                    [attr.href]="'#' + link.id"
-                    startOffset="60%">
-            {{link.label}}
-          </textPath>
-        </svg:text>
-        </svg:g>
-      </ng-template>
-    </ngx-graph>
+        <ng-template #linkTemplate let-link>
+          <svg:g class="edge">
+            <svg:path
+              class="line"
+              stroke-width="2"
+              marker-end="url(#arrow)" >
+            </svg:path>
+            <svg:text
+              class="edge-label"
+              text-anchor="middle">
+            <textPath
+                      style="fill: #666;"
+                      [attr.href]="'#' + link.id"
+                      startOffset="60%">
+              {{link.label}}
+            </textPath>
+          </svg:text>
+          </svg:g>
+        </ng-template>
+      </ngx-graph>
+     </div>
    </div>
 </div>
