@@ -393,7 +393,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           _id: e._id,
           locations: e.locations,
           earlyDate: e.earlyDate,
-          lateDate: e.earlyDate,
+          lateDate: e.lateDate,
           sources: e.sources,
           children: e.children,
         };
